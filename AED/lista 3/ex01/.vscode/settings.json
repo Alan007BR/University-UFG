@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "conjuntos.h": "c",
+        "stdio.h": "c"
+    }
+}
