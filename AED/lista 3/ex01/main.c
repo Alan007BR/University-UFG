@@ -12,8 +12,8 @@ void menu(choice) {
     printf("6 - maiores que X do conjunto\n");
     printf("7 - menores que X do conjunto\n");
     printf("8 - verifica se o elemento X pertence ao conjunto\n");
-    printf("1 - criar um vetor vazio\n");
-    printf("1 - criar um vetor vazio\n");
+    printf("9 - verificar se os conjuntos sao identicos\n");
+    printf("123 - criar um vetor vazio\n");
     printf("16 - Monstrar conjunto em ordem Crescente - 'C' ou decrescente - 'D' \n");
     printf("\n");
 }
@@ -26,16 +26,16 @@ int main(){
     Conjunto *C;
     Conjunto *C2;
 
-    
     while(1) {
         menu(choice);
         scanf("%d",&choice);    
         
             switch (choice) {
             case 1:
-                C = criaConjunto();
-                C2 = criaConjunto();
-                C == NULL ? printf("FALHA: O conjunto nao foi criado\n") : printf("SUCESSO: Conjunto criado\n");
+                //criaConjunto(C);
+                //C2 = criaConjunto();
+                criaConjunto(C) == SUCESSO ? printf("Conjunto Criado\n") : printf("O Conjunto nao foi criado\n");
+                //C == NULL ? printf("FALHA: O conjunto nao foi criado\n") : printf("SUCESSO: Conjunto criado\n");
                 break;
             case 2:
                 conjuntoVazio(C) == 1 ? printf("conjunto vazio.\n") : printf("conjunto nao-vazio.\n");
@@ -110,5 +110,8 @@ int main(){
             }
     }
 
+    printf("liberando memoria\n");
+    liberar(C);
+    //C = NULL;   
     return 0;
 }

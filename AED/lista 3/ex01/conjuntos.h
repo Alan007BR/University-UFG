@@ -1,11 +1,15 @@
 #define MAX 100
+#define SUCESSO 1
+#define FALHA 1
 
 typedef struct {
     int tam;
     int num[MAX];
+    
 } Conjunto;
 
-    Conjunto *criaConjunto       ();
+    //Conjunto *criaConjunto    ();
+    int criaConjunto            (Conjunto *C);
     int conjuntoVazio           (Conjunto *C);
     int insereElementoConjunto  (int x, Conjunto *C);
     int excluirElementoConjunto (int x, Conjunto *C);

@@ -2,37 +2,39 @@
 #include <stdlib.h>
 #include "conjuntos.h"
 
-    Conjunto *criaConjunto() {
+    // Conjunto *criaConjunto() {
 
-        Conjunto *C = (Conjunto *)malloc(sizeof(Conjunto));
+    //     Conjunto *C = (Conjunto *)malloc(sizeof(Conjunto));
+    //     C->tam = 0;
+
+    //     if(C == NULL) return 0;
+
+    //     return C;
+    // }
+
+    int criaConjunto(Conjunto *C) {
+        C = (Conjunto *)malloc(sizeof(Conjunto));
         C->tam = 0;
+        //(*C)->tam = dec->tam;
+        //(*C) = (Conjunto *)malloc(sizeof(Conjunto));
+        //C->tam = 0;
 
-        if(C == NULL) return 0;
-
-        return C;
+        return SUCESSO;
     }
 
     int conjuntoVazio(Conjunto *C) {
-        if(C == NULL){ printf("Error: esse conjunto nao existe.\n"); return 0;}
+        if(C == NULL){ printf("Error: esse conjunto nao existe.\n"); return FALHA;}
         else {
         printf("verificando...\n");
-        if(C->tam == 0) return 1;
-        else return 0;
+        if(C->tam == 0) return SUCESSO;
+        else return FALHA;
         }
-
     }
 
     int insereElementoConjunto(int x, Conjunto *C) {
         printf("inserindo elemento...\n");
         C->num[C->tam++] = x;
         return 1;
-
-    }
-
-    void liberar(Conjunto *C) {
-        int i = 0;
-        free(C->num);
-        free(C);
     }
 
     int excluirElementoConjunto (int x, Conjunto *C) {
@@ -48,12 +50,11 @@
             //refazer o vetor só que excluindo o elemento que vamos remover
             for(i = 0; i < C->tam && C->num[i] != x; i++) {
                 printf("%d--", C->num[i]);
-            for(i++; i < C->tam; i++) {
-                C->num[i-1] = C->num[i];
-            }
+                for(i++; i < C->tam; i++) {
+                    C->num[i-1] = C->num[i];
+                }
             }
         }
-
             C->tam--;
     }
 
@@ -128,7 +129,6 @@
                     flag++;
                 }
             }
-
         }
 
         if(flag == 0){
@@ -146,3 +146,7 @@ int search(int x, Conjunto *C){
 
     return 0;
 }
+
+    void liberar(Conjunto *C) {
+        free(C);
+    }
