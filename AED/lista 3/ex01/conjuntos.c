@@ -42,7 +42,6 @@ void liberar(Conjunto *C) {
     int conjuntoVazio(Conjunto *C) {
         if(C == NULL){ printf("Error: esse conjunto nao existe.\n"); return FALHA;}
         else {
-        printf("verificando...\n");
         if(C->tam == 0) return SUCESSO;
         else return FALHA;
         }
@@ -59,19 +58,16 @@ void liberar(Conjunto *C) {
 
         finded = searchInVetor(x, C);
 
-        if(C->num[finded] != x){ printf("nao encontrado\n"); return 0;}
+        if(C->num[finded] != x){ return FALHA;}
         else {
-            printf("encontrado\n");
-
             //refazer o vetor só que excluindo o elemento que vamos remover
-            for(i = 0; i < C->tam && C->num[i] != x; i++) {
-                printf("%d--", C->num[i]);
+            for(i = 0; i < C->tam && C->num[i] != x; i++); 
                 for(i++; i < C->tam; i++) {
                     C->num[i-1] = C->num[i];
                 }
-            }
         }
             C->tam--;
+            return SUCESSO;
     }
 
     int maior(int x, Conjunto *C){
@@ -197,16 +193,6 @@ void liberar(Conjunto *C) {
         int flag = 0;
         int i = 0;
 
-        // if(C1->tam >= C2->tam) {
-        //     for(i = 0; i < C1->tam; i++){
-        //         check = searchInVetor(C1->num[i], C2);
-        //         if(check != 0){
-        //             insereElementoConjunto(C1->num[i], resul);
-        //         }
-        //     }
-        // }
-
-        //if(C2->tam > C1->tam){
             printf("c1: %d ", C1->num[0]);
             printf("c2: %d\n", C2->num[0]);
             if(C1->num[0] == C2->num[0]){
@@ -219,7 +205,6 @@ void liberar(Conjunto *C) {
                     insereElementoConjunto(C2->num[i], resul);
                 }
             }
-       // }
 
         return resul;
     }
@@ -229,17 +214,49 @@ void liberar(Conjunto *C) {
         Conjunto *result = criaConjunto();
         int check = 0;
         int flag = 0;
-        int i = 0;
+        int i = 0, j = 0;
             
             for(i = 0; i < C1->tam; i++){
-
-            check = searchInVetor(C1->num[i], C2);
-            if(check == 0){
+                for(j = 0; j < C2->tam; j++){
+                    if(C1->num[i] == C2->num[j]){
+                        flag++;
+                    }
+                }
+                if(flag == 0){
                 insereElementoConjunto(C1->num[i], result);  
                 }
+            flag = 0;
             }
 
         return result;
+    }
+
+    Conjunto *conjuntoPartes(Conjunto *C){
+        int i = 0;
+        int numCombTot = 1;
+        int comb;
+        int buffer_int;
+
+        for(i = 0; i < C->tam; i++){
+            numCombTot *= 2;
+        }
+        printf("\n");
+        for(comb = 0; comb < numCombTot; comb++){
+            buffer_int = comb;
+        printf(" [");
+            for(i = 0; i < C->tam; i++){
+                if(buffer_int % 2 == 1){
+                    printf(" %d ", C->num[i]);
+                }
+                buffer_int /= 2;
+            }
+        printf("] ");
+
+        if(comb % 2 == 0){
+            printf("\n");
+        }
+        }
+        printf("\n");
     }
 
 
@@ -254,22 +271,66 @@ void liberar(Conjunto *C) {
             exit(0);
         }
         int i = 0;
+        int j = 0;
+        int aux;
+
+        if(ordem == "C"){
+            for(i = C->tam - 1; i > 0; i--){
+                for(j = 0; j < i; j++){
+                    if(C->num[j] > C->num[j + 1]){
+                        aux = C->num[j];
+                        C->num[j] = C->num[j + 1];
+                        C->num[j + 1] = aux;
+                    }
+                }
+            }
+        }
+
+        if(ordem == "D"){
+            for(i = C->tam - 1; i > 0; i--){
+                for(j = 0; j < i; j++){
+                    if(C->num[j] < C->num[j + 1]){
+                        aux = C->num[j];
+                        C->num[j] = C->num[j + 1];
+                        C->num[j + 1] = aux;
+                    }
+                }
+            }
+        }
 
             for(i = 0; i < C->tam; i++){
-                printf("[%d] - ", C->num[i]);
+                printf("  [%d]  ", C->num[i]);
+
+                if(i % 6 == 0 && i != 0){
+                    printf("\n");
+                }
             }
 
         printf("\n");
     }
 
-    int destroiConjunto(Conjunto *C){
-        if(C != NULL){
-            free(C);
-        }
+    int copiarConjunto(Conjunto *C1, Conjunto *C2){
+        int i = 0;
+        int check;
+        check = C2->tam;
 
-        if(C == NULL){
-            return SUCESSO;
+        for(i = 0; i < C1->tam; i++){
+            insereElementoConjunto(C1->num[i], C2);
+        }
+        if(C2->tam > check){
+        return SUCESSO;
+
         }else{
             return FALHA;
         }
+    }
+
+
+    int destroiConjunto(Conjunto *C){
+        if(C != NULL){
+            free(C);
+
+            return SUCESSO;
+        }
+            return FALHA;
     }
