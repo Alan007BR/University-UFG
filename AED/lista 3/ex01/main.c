@@ -18,9 +18,9 @@ void menu(int choice) {
     printf("12 - Uniao de C1 e C2\n");
     printf("13 - Interseccao do conjunto C1 com C2\n");
     printf("14 - Diferenca\n");
-    printf("15 - U\n");
+    printf("15 - Mostrar conjunto das partes\n");
     printf("16 - Monstrar conjunto em ordem Crescente - 'C' ou decrescente - 'D' \n");
-    printf("17 - U\n");
+    printf("17 - Copiar conjunto de C1 para C2\n");
     printf("18 - destruir(liberar) Conjunto\n");
 
     printf("\n");
@@ -30,7 +30,7 @@ int main(){
 
     unsigned int choice;
     int x, check, aux, i = 0;
-    char ordem[2];
+    char ordem[2] = "AN";
     Conjunto *C;
     Conjunto *C2;
     Conjunto *C3;
@@ -57,7 +57,8 @@ int main(){
                 break;
             case 4:
                 scanf("%d",&x);
-                excluirElementoConjunto(x, C);
+                excluirElementoConjunto(x, C) == FALHA ? printf("FALHA: numero nao encontrado\n") : printf("elemento encontrado e retirado\n");
+                mostraConjunto(C, ordem);
                 break;
             case 5:
                 printf("cardinalidade: %d", tamanhoConjunto(C));
@@ -161,6 +162,7 @@ int main(){
                 }
 
                 C3 = interseccao(C, C2);
+                conjuntoVazio(C3) == 1 ? printf("conjunto vazio.\n") : printf("conjunto nao-vazio.\n");
                 mostraConjunto(C3, "C");
                 break;
             case 14:
@@ -182,17 +184,46 @@ int main(){
                 }
 
                 C3 = diferenca(C, C2);
+                conjuntoVazio(C3) == 1 ? printf("conjunto vazio.\n") : printf("conjunto nao-vazio.\n");
                 mostraConjunto(C3, "C");
                 break;
             case 15:
-                criaConjunto(C);
+                C = criaConjunto();
+                printf("quantos elementos tera em C1?\n");
+                scanf("%d", &aux);
+                printf("insira os elementos de C1: \n ...\n");
+                for(i = 0; i < aux; i++){
+                    scanf("%d", &check);
+                    insereElementoConjunto(check, C);
+                }
+                
+                conjuntoPartes(C);
                 break;
             case 16:
                 scanf("%s", ordem);
                 mostraConjunto(C, ordem);
                 break;
             case 17:
-                criaConjunto(C);
+                C = criaConjunto();
+                C2 = criaConjunto(); 
+                printf("quantos elementos tera em C1?\n");
+                scanf("%d", &aux);
+                printf("insira os elementos de C1: \n ...\n");
+                for(i = 0; i < aux; i++){
+                    scanf("%d", &check);
+                    insereElementoConjunto(check, C);
+                }
+                printf("quantos elementos tera em C2?\n");
+                scanf("%d", &aux);
+                printf("insira os elementos de C2: \n ...\n");
+                for(i = 0; i < aux; i++){
+                    scanf("%d", &check);
+                    insereElementoConjunto(check, C2);
+                }
+
+                copiarConjunto(C, C2) == SUCESSO ? printf("Concluido com sucesso\n") : printf("Algo deu errado\n");
+
+                mostraConjunto(C2, ordem);
                 break;
             case 18:
                 destroiConjunto(C) == SUCESSO ? printf("conjunto destruido\n") : printf("por alguma razao, nao foi possivel destruir o conjunto\n");
