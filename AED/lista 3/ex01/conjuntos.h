@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
 #define MAX 1000000
 #define SUCESSO 1
 #define FALHA 0

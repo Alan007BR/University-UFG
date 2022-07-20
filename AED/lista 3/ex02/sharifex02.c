@@ -2,6 +2,8 @@
 // Arquivo data.h
 //
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define TRUE 1
 #define FALSE 0
@@ -35,11 +37,6 @@ char *imprimeData               (Data d, char *formato);
 //
 //  Arquivo data.c
 //
-#include <stdio.h>
-#include <stdlib.h>
-#include "data.h"
-#include <string.h>
-
 
 //AUXILIARES
 int diasdoano(unsigned int dia, unsigned int mes, unsigned int ano){
@@ -345,9 +342,6 @@ char *imprimeData(Data d, char *formato){
 //
 // Corpo principal (main.c)
 //
-#include <stdio.h>
-#include <stdlib.h>
-#include "data.h"
 
 void menu(int choice) {
     printf("\n");
