@@ -272,7 +272,7 @@ unsigned int obtemDiaSemanaData (Data d){
     int ano = d.ano;
     int t[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
     if(d.mes < 3){ano -=1;}
-
+    
     return (ano + ano/4 - ano/100 + ano/400 + t[d.mes-1] + d.dia) % 7;
 }
 

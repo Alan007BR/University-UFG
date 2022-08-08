@@ -32,6 +32,7 @@ int main(){
     Conjunto *C;
     Conjunto *C2;
     Conjunto *C3;
+    Conjunto *teste;
 
     while(1) {
         menu(choice);
@@ -40,12 +41,13 @@ int main(){
             switch (choice) {
             case 1:
                 C = criaConjunto();
-                C2 = criaConjunto(); 
+                C2 = criaConjunto();
+                criaConjunto2(&teste);
                 //C = criaConjunto(C) == SUCESSO ? printf("Conjunto Criado\n") : printf("O Conjunto nao foi criado\n");
-                C == NULL ? printf("FALHA: O conjunto nao foi criado\n") : printf("SUCESSO: Conjunto criado\n");
+                teste == NULL ? printf("FALHA: O conjunto nao foi criado\n") : printf("SUCESSO: Conjunto criado\n");
                 break;
             case 2:
-                conjuntoVazio(C) == 1 ? printf("conjunto vazio.\n") : printf("conjunto nao-vazio.\n");
+                conjuntoVazio(&teste) == 1 ? printf("conjunto vazio.\n") : printf("conjunto nao-vazio.\n");
                 break;
             case 3:
                 scanf("%d",&x);

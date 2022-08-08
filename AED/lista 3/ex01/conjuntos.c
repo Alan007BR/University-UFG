@@ -19,6 +19,17 @@ void liberar(Conjunto *C) {
 }
 
 
+    int criaConjunto2(Conjunto *C) {
+
+        C = (Conjunto *)malloc(sizeof(Conjunto));
+        C->tam = 0;
+
+        if(C == NULL) return 0;
+
+        return TRUE;
+    }
+
+
     Conjunto *criaConjunto() {
 
         Conjunto *C = (Conjunto *)malloc(sizeof(Conjunto));
@@ -28,7 +39,6 @@ void liberar(Conjunto *C) {
 
         return C;
     }
-
     // int criaConjunto(Conjunto *C) {
     //     C = (Conjunto *)malloc(sizeof(Conjunto));
     //     C->tam = 0;

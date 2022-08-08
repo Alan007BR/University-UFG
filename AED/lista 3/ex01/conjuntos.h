@@ -15,8 +15,8 @@ typedef struct {
     
 } Conjunto;
 
-    Conjunto *criaConjunto    ();
-    //int criaConjunto            (Conjunto *C);
+    Conjunto *criaConjunto   ();
+    int criaConjunto2           (Conjunto *C);
     int conjuntoVazio           (Conjunto *C);
     int insereElementoConjunto  (int x, Conjunto *C);
     int excluirElementoConjunto (int x, Conjunto *C);
