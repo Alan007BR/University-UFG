@@ -73,7 +73,7 @@ int main(){
         insert(&p, &fila);
     }
     hora.h = fila.p[0].h;
-    hora.m = fila.p[0].m;
+    hora.m = fila.p[0].m +30;
 
     for(i = 1; i < nTri; i++){
         atualizahora(&hora, 30);
