@@ -72,5 +72,7 @@ int main(){
     }
     printf("\n");
 
+    free(pares);
+    free(impares);
     return 0;
 }

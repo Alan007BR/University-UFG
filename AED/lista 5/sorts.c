@@ -19,7 +19,7 @@ void insertionSort(int *vector, int n){
 
     for(i = 1; i < n; i++){
         aux = vector[i];
-        for(j = i-1; j>= 0 && vector[j] < aux; j--){// < ou >
+        for(j = i-1; j>= 0 &&  aux < vector[j] ; j--){// < ou >
             vector[j+1] = vector[j];
         }
         vector[j+1] = aux;
@@ -33,7 +33,7 @@ void selectionSort(int *vector, int n){
     for(i = 0; i < n-1; i++){ //for de cada elemento do vetor desorganizado
         min = i;    //achar o elemento mínimo
         for(j = i+1; j < n; j++){ // < ou > para decrescente ou crescente
-            if(vector[j] > vector[min]){
+            if(vector[j] < vector[min]){
                 min = j;
             }
         }
