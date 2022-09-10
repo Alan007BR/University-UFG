@@ -1,23 +1,28 @@
-#include <stdio.h>
-#include <stdlib.h>
+void bubblesort(int *vector, int size){
+    int i = 0;
+    int j = 0;
+    int tmp;
 
-#define MAX 1001
-
-static int selection = 0;
-static int insertion = 0;
+    for(i = 0; i < size; i++){
+        for(j = 0; j < size-1; j++){
+            if(vector[j] > vector[j+1]){
+                tmp = vector[j];
+                vector[j] = vector[j+1];
+                vector[j+1] = tmp;
+            }
+        }
+    }
+}
 
 void insertionSort(int *vector, int n){
     int i = 1, j = 0, aux;
 
     for(i = 1; i < n; i++){
         aux = vector[i];
-        for(j = i-1; j>= 0 &&  aux < vector[j] ; j--){// < ou >
+        for(j = i-1; j>= 0 && vector[j] < aux; j--){// < ou >
             vector[j+1] = vector[j];
-            insertion++; //troca
-
         }
         vector[j+1] = aux;
-        insertion++; //troca
     }
 }
 
@@ -28,7 +33,7 @@ void selectionSort(int *vector, int n){
     for(i = 0; i < n-1; i++){ //for de cada elemento do vetor desorganizado
         min = i;    //achar o elemento mínimo
         for(j = i+1; j < n; j++){ // < ou > para decrescente ou crescente
-            if(vector[j] < vector[min]){
+            if(vector[j] > vector[min]){
                 min = j;
             }
         }
@@ -36,26 +41,6 @@ void selectionSort(int *vector, int n){
             aux = vector[i];
             vector[i] = vector[min];
             vector[min] = aux;
-            selection++; //troca
         }
     }
 }
-
-int main(){
-
-    int vector[MAX], vector2[MAX];
-    int n, i = 0;
-
-
-    scanf("%d", &n);
-    for(i = 0; i < n; i++){
-        scanf("%d", &vector[i]);
-        vector2[i] = vector[i];
-    }
-        
-    insertionSort(vector, n);
-    selectionSort(vector2, n);
-
-    printf("%d", insertion - selection);
-    return 0;
-} 
