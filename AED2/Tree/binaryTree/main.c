@@ -18,7 +18,7 @@ int main(){
     
     printf("The lowest num: %d\n", minimumKey(tree.root)->key);
     printf("The biggest num: %d\n", maximumKey(tree.root)->key);
-    //printf("num %d in %d\n", 8, treeSearch(tree.root, 8));
+    printf("num %d in %d\n", 8, treeSearch(tree.root, 8));
     
     treeDelete(tree.root, 13);
 
