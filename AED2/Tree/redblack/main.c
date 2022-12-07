@@ -1,40 +1,103 @@
 #include "redblack.c"
 
+void opti(){
+    printf("1- adicionar um dado a arvore\n");
+    printf("2- remover dado a arvore\n");
+    printf("3- achar maior dado na arvore\n");
+    printf("4- achar menor dado na arvore\n");
+    printf("5- procurar um dado na arvore\n");
+    printf("6- printar inorder\n");
+    printf("7- printar preorder\n");
+    printf("8- printar postorder\n");
+    printf("9- sair\n");
+    printf("\n");
+}
+
 int main(){
 
     Tree *tree = NewTree();
-    Node *temp;
+    Node *temp, temp2;
+    int option, t;
 
-    insert(tree, 10);
-    printf("%d\n", tree->root->key);
-    insert(tree, 20);
-    insert(tree, 7);
-    insert(tree, 13);
-    insert(tree, 15);
-    insert(tree, 8);
-    inOrder(tree->root);
-    printf("\n");
-    printf("%d\n", treeHeight(tree->root));
+    while(1){
 
-    delete(tree, findNode(tree, tree->root, 15));
-    delete(tree, findNode(tree, tree->root, 7));
+        opti();
+        scanf("%d", &option);
+        switch (option){
+        case 1:
 
-    delete(tree, findNode(tree, tree->root, 10));
-    
-    inOrder(tree->root);
-    printf("\n");
+            printf("\n");
+            printf("Digite o numero do novo no: ");
+            scanf("%d", &t);
+            insert(tree, t);
+            
+            inOrder(tree->root); printf("\n");
+            break;
+        case 2:
 
-    
-    printf("\n");
-    temp = maximumKey(tree, tree->root);
-    printf("MAX: %d\n", temp->key);
-    temp = minimumKey(tree, tree->root);
-    printf("MIN: %d\n", temp->key);
+            printf("\n");
+            printf("Digite a chave do no que deseja remover: ");
+            scanf("%d", &t);
+            temp = findNode(tree, tree->root, t);
+            if(temp->key != NULL){
+            
+            delete(tree, temp);
+            }else{
+                printf("nao encontrado\n");
+            }
+            printf("\n");
+            
+            inOrder(tree->root); printf("\n");
+            break;
+        case 3:
 
-    inOrder(tree->root); printf("\n");
-    preOrder(tree->root); printf("\n");
-    postOrder(tree->root); printf("\n");
+            printf("\n");
+            temp = maximumKey(tree, tree->root);
+            printf("maximo: %d\n", temp->key);
+            break;
+        case 4:
 
-    freeTree(tree->root);
+            printf("\n");
+            temp = minimumKey(tree, tree->root);
+            printf("minimo: %d\n", temp->key);
+            break;
+        case 5:
+
+            printf("\n");
+            printf("Digite a chave do no que deseja procurar: ");
+            scanf("%d", &t);
+            temp = findNode(tree, tree->root, t);
+            if(temp->key == t){
+            printf("%d ", temp->key);
+            printf("encontrado\n");
+            }else{
+                printf("nao encontrado\n");
+            }
+            break;
+        case 6:
+            
+            inOrder(tree->root); printf("\n");
+            printf("\n");
+            break;
+        case 7:
+            
+            preOrder(tree->root); printf("\n");
+            printf("\n");
+            break;
+        case 8:
+            
+            postOrder(tree->root); printf("\n");
+            printf("\n");
+            break;
+        case 9:
+            
+            freeTree(tree->root);
+            return 0;
+            break;
+        
+        default:
+            break;
+        }
+    }
     return 0;
 }

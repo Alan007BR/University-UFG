@@ -11,7 +11,6 @@ Tree* NewTree(){
 
     tree->null = node_nil;
     tree->root = tree->null;
-    //tree->root->p = tree->null;
     
     return tree;
 }
@@ -19,33 +18,25 @@ Tree* NewTree(){
 void inOrder(Node *node){ //recursive function
 
     if(node->key != NULL){
-
         inOrder(node->left);
         printf("%d ", node->key);
         inOrder(node->right);
-
     }
 }
-
 void preOrder(Node *node){ //recursive function
 
     if(node->key != NULL){
-
         printf("%d ", node->key);
         inOrder(node->left);
         inOrder(node->right);
-
     }
 }
-
 void postOrder(Node *node){ //recursive function
 
     if(node->key != NULL){
-
         inOrder(node->left);
         inOrder(node->right);
         printf("%d ", node->key);
-
     }
 }
 
@@ -57,6 +48,44 @@ void freeTree(Node* node){//recursive function
     }
 }
 
+int treeHeight(Node *tree){
+    if(tree->key == NULL){
+        return -1;
+    }else{
+        int left = treeHeight(tree->left);
+        int right = treeHeight(tree->right);
+
+        if(left > right){
+            return left + 1;
+        }else{
+            return right + 1;
+
+        }
+    }
+}
+
+Node* minimumKey(Tree* tree, Node *node){
+    while(node->left!= tree->null) node = node->left;
+
+    return node;
+}
+
+Node* maximumKey(Tree* tree, Node *node){
+    while(node->right!= tree->null) node = node->right;
+
+    return node;
+}
+
+Node *findNode(Tree *tree, Node *node, int k){
+    while(node != tree->null && k != node->key){
+        if(k < node->key)
+            node = node->left;
+        else
+            node = node->right;
+    }
+        return node;
+}
+
 void leftRotate(Tree *tree, Node *node) {
 
     Node *y;
@@ -64,9 +93,8 @@ void leftRotate(Tree *tree, Node *node) {
     y = node->right;
     node->right = node->left;
     
-    if(y->left != tree->null){
+    if(y->left != tree->null)
         y->left->p = node;
-    }
 
     y->p = node->p; // node's parent becomes y's parent
 
@@ -109,6 +137,18 @@ void rightRotate(Tree *tree, Node *node) {
 
 }
 
+void transplant(Tree *tree, Node *u, Node *v){
+    if(u->p == tree->null){
+        tree->root = v;
+    } else if(u == u->p->left){
+        u->p->left = v;
+    }else{
+        u->p->right = v;
+    }
+
+    v->p = u->p;
+}
+
 void insert(Tree *tree, int value){
     Node *x = tree->root;
     Node *y = tree->null;
@@ -122,8 +162,7 @@ void insert(Tree *tree, int value){
         y = x;
         if(z->key < x->key)
             x = x->left;
-        else
-            x = x->right;
+        else x = x->right;
     }
     z->p = y;
 
@@ -156,12 +195,10 @@ void insertFixup(Tree *tree, Node *z){
                     z = z->p;
                     leftRotate(tree, z);
                 }
-
                 //case 3
                 z->p->color = BLACK;
                 z->p->p->color = RED;
                 rightRotate(tree, z->p->p);
-
             }
 
         }else {
@@ -176,43 +213,18 @@ void insertFixup(Tree *tree, Node *z){
                     z = z->p;
                     rightRotate(tree, z);
                 }
-
                 //case 3
                 z->p->color = BLACK;
                 z->p->p->color = RED;
                 leftRotate(tree, z->p->p);
-
             }
         }
     }
     tree->root->color = BLACK;
 }
 
-Node *findNode(Tree *tree, Node *node, int k){
-    while(node != tree->null && k != node->key){
-        if(k < node->key)
-            node = node->left;
-        else
-            node = node->right;
-    }
-        return node;
-}
-
-void transplant(Tree *tree, Node *u, Node *v){
-    if(u->p == tree->null){
-        tree->root = v;
-    } else if(u == u->p->left){
-        u->p->left = v;
-    }else{
-        u->p->right = v;
-    }
-
-    v->p = u->p;
-}
-
 void delete(Tree *tree, Node *z){
-    Node *y = z;
-    Node *x;
+    Node *y = z; Node *x;
     enum COLOR yOriginalColor = y->color;
 
     if(z->left == tree->null){
@@ -305,32 +317,4 @@ void deleteFixup(Tree *tree, Node *x){
         }
     }
     x->color = BLACK;
-}
-
-int treeHeight(Node *tree){
-    if(tree->key == NULL){
-        return -1;
-    }else{
-        int left = treeHeight(tree->left);
-        int right = treeHeight(tree->right);
-
-        if(left > right){
-            return left + 1;
-        }else{
-            return right + 1;
-
-        }
-    }
-}
-
-Node* minimumKey(Tree* tree, Node *node){
-    while(node->left!= tree->null) node = node->left;
-
-    return node;
-}
-
-Node* maximumKey(Tree* tree, Node *node){
-    while(node->right!= tree->null) node = node->right;
-
-    return node;
 }
