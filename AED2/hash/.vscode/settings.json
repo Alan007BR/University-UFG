@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "type_traits": "c",
+        "hash.h": "c"
+    }
+}
