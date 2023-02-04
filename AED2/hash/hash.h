@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define HASH_SIZE 5
+#define HASH_SIZE 50000000
 #define ERROR -1
 
 typedef struct Node {
@@ -21,11 +21,11 @@ typedef struct hashTable{
     Node **table;
 }   hashTable;
 
-double hash( double key);
-hashTable *MakeTable();
-void ShowTable(struct hashTable* T);
-void DestroyTable(hashTable* T);
-int SizeTable(hashTable* T);
-void InsertTable(hashTable* T, double x, char *value);
-void SearchTable(hashTable* T, double x);
-void RemoveTable(hashTable* T, double x);
+double hash( double key);  //hash function
+hashTable *MakeTable(); //criar a tabela Hash
+void ShowTable(struct hashTable* T); //mostrar dados da tabela hash
+void DestroyTable(hashTable* T); //destrua a tabela Hash
+int SizeTable(hashTable* T); //Cardinalidade da Tabela Hash
+void InsertTable(hashTable* T, double x, char *value); //Insere um Elemento na tabela Hash
+void SearchTable(hashTable* T, double x); //Procurar uma chave x na tabela Hash
+void RemoveTable(hashTable* T, double x); //Remover um Elemento na tabela Hash
