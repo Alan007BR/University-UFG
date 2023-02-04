@@ -20,7 +20,6 @@ hashTable *MakeTable(){
 
     for(i = 0; i < HASH_SIZE; i++){ //define todos como NULL
         T->table[i] = NULL;
-        //T->table[i]->tam = 0;
     }
 
     return T;
@@ -119,7 +118,6 @@ void ShowTable(struct hashTable* T){
                 printf("%s, ", print->value);
                 print = print->pred;
             }
-
             printf("\n");
         }
 
@@ -137,7 +135,6 @@ void DestroyTable(hashTable* T){
             while(now != NULL){
                 aux = now;
                 now = now->next;
-                // printf(" %lf\n", aux->key);        
                 free(aux);
             }
     }
