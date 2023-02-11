@@ -83,6 +83,21 @@ void SearchTable(struct hashTable* T, double key){
     return ERROR;
 }
 
+int searchX(hashTable* T, double key){
+    Node *aux;
+    int i = 0;
+
+    for(i = 0; i < HASH_SIZE; i++){
+        aux = T->table[i];
+
+        if(aux != NULL && aux->key == key){
+            return ERROR;
+        }
+    }
+
+    return 1;
+}
+
 void RemoveTable(hashTable* T, double key){
     int i = 0;
     Node *aux, *now;
@@ -130,6 +145,7 @@ void DestroyTable(hashTable* T){
     int i = 0;
     Node* aux, *now;
 
+    if(SizeTable(T) != 0){
     for(i = 0; i < HASH_SIZE; i++){
         now = T->table[i];
             while(now != NULL){
@@ -140,4 +156,12 @@ void DestroyTable(hashTable* T){
     }
     free(T->table);
     free(T);
+    
+    if(T->table != NULL || T != NULL){
+        printf("ocorre um erro inesperado\n");
+    }
+    } else{
+        T->table = NULL;
+    }
+
 }
