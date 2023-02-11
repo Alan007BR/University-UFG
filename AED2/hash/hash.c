@@ -61,9 +61,9 @@ void InsertTable( hashTable* T, double key, char *value){
     }
 }
 
-void SearchTable(struct hashTable* T, double key){
+double SearchTable(struct hashTable* T, double key){
     Node *aux, *print;
-    int i = 0;
+    int i = 0, flag = 0;
 
     for(i = 0; i < HASH_SIZE; i++){
         aux = T->table[i];
@@ -71,6 +71,7 @@ void SearchTable(struct hashTable* T, double key){
         if(aux != NULL && aux->key == key){
             printf("|%lf| :\n", aux->key);
             print = aux;
+            flag = 1;
             while(print != NULL){
 
                 printf("%s, ",print->value);
@@ -80,7 +81,9 @@ void SearchTable(struct hashTable* T, double key){
             break;
         }
     }
-    return ERROR;
+    if(flag != 1){
+        return ERROR;
+    }
 }
 
 int searchX(hashTable* T, double key){

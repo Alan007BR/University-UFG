@@ -37,28 +37,40 @@ int main(){
         case 4:
             printf("%d\n", SizeTable(T));
             break;
-        case 5:
+        case 5: //há um bug aqui
             printf("tecle '-1' para terminar a execucao\n padrao: \n(chave)\n(dado-satelite)\n");
             while(aux != -1){
 
                 scanf("%lf", &aux);
+                if(aux == -1){
+                    break;
+                }else{
                 scanf("%s", &aux2);
 
-            if(searchX(T, aux) == ERROR){
-                printf("essa chave ja existe dentro da tabela\n");
-                continue;
+                    if(searchX(T, aux) == ERROR){
+                        printf("essa chave ja existe dentro da tabela\n");
+                        continue;
+                    }
+                        InsertTable(T, aux, aux2);             
+                }
             }
-            
-                InsertTable(T, aux, aux2);
-            }
+            option();
             break;
         case 6:
             scanf("%lf", &aux);
-            SearchTable(T, aux);
+            aux = SearchTable(T, aux);
+
+            if(aux == ERROR){
+                printf("essa chave nao existe dentro da tabela\n");
+            }
             break;
 
         case 7:
             scanf("%lf", &aux);
+
+            if(searchX(T, aux) == 1){
+                printf("essa nao existe dentro da tabela\n");
+            }
             RemoveTable(T, aux);
             break;
         case 8:

@@ -27,5 +27,5 @@ void ShowTable(struct hashTable* T); //mostrar dados da tabela hash
 void DestroyTable(hashTable* T); //destrua a tabela Hash
 int SizeTable(hashTable* T); //Cardinalidade da Tabela Hash
 void InsertTable(hashTable* T, double x, char *value); //Insere um Elemento na tabela Hash
-void SearchTable(hashTable* T, double x); //Procurar uma chave x na tabela Hash
+double SearchTable(hashTable* T, double x); //Procurar uma chave x na tabela Hash
 void RemoveTable(hashTable* T, double x); //Remover um Elemento na tabela Hash
