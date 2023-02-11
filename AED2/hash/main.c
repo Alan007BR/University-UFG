@@ -5,9 +5,9 @@ void option(){
     printf("1 - criar a tabela Hash\n");
     printf("2 - mostrar dados da tabela hash\n");
     printf("3 - destrua a tabela Hash\n");
-    printf("4 - Cardinalidade da Tabela Hash\n");
+    printf("4 - cardinalidade da Tabela Hash\n");
     printf("5 - Insere um Elemento na tabela Hash\n");    
-    printf("6 - Procurar uma chave x na tabela Hash\n");
+    printf("6 - procurar uma chave x na tabela Hash\n");
     printf("7 - Remover um Elemento na tabela Hash\n");
     printf("8 - finalizar programa\n");
     printf("\n");
@@ -25,7 +25,6 @@ int main(){
         scanf("%d",&opt);
         switch (opt){
         case 1:
-            
             hashTable *T = MakeTable();
             break;
         case 2:
@@ -37,12 +36,13 @@ int main(){
         case 4:
             printf("%d\n", SizeTable(T));
             break;
-        case 5: //há um bug aqui
-            printf("tecle '-1' para terminar a execucao\n padrao: \n(chave)\n(dado-satelite)\n");
+        case 5:
+            printf("tecle '-1' para terminar a execucao\n padrao: \n(chave) (dado-satelite)\n");
             while(aux != -1){
 
                 scanf("%lf", &aux);
                 if(aux == -1){
+
                     break;
                 }else{
                 scanf("%s", &aux2);
