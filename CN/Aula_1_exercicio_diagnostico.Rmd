@@ -1,0 +1,77 @@
+---
+title: "Avaliação Diagnóstica - Cálculo Numérico"
+subtitle: "Prof. Dr. Eder Angelo Milani"
+output: pdf_document
+date: "11/08/2025"
+---
+
+# Avaliação Diagnóstica
+
+## Exercício 1 – `for` + `if`
+
+Escreva um programa em R que:
+
+1. Entre com um número inteiro **n**.  
+2. Percorra todos os números de **1 até n** usando a estrutura `for`.  
+3. Verifique, usando `if`, quais números são múltiplos de 3.  
+4. Exiba na tela apenas os números múltiplos de 3.  
+
+
+## Exercício 2 – `while` + `if` + `else`
+
+Escreva um programa em R que:
+
+1. Sorteie um número inteiro aleatório entre **1 e 50**.  
+2. Peça para o usuário adivinhar o número.  
+3. Enquanto o palpite for diferente do número sorteado, repita o processo usando `while`.  
+4. Se o palpite for **maior** que o número sorteado, exiba `"Tente um número menor"`.  
+5. Caso contrário, exiba `"Tente um número maior"`.  
+6. Ao acertar, mostre `"Parabéns! Você acertou!"` e o número de tentativas usadas.  
+
+
+\newpage
+
+# Gabarito
+
+## Solução Exercício 1 
+
+```{r, eval=FALSE}
+# Solicita ao usuário um número inteiro
+n <- as.integer(readline(prompt = "Digite um número inteiro: "))
+
+# Percorre de 1 até n
+for (i in 1:n) {
+  # Verifica se é múltiplo de 3
+  if (i %% 3 == 0) {    # %% pega o resto da divisão
+    print(i)
+  }
+}
+```
+
+## Solução Exercício 2 
+
+```{r, eval=FALSE}
+# Sorteia número entre 1 e 50
+numero_secreto <- sample(1:50, 1)
+
+# Contador de tentativas
+tentativas <- 0
+
+# Primeira leitura do usuário
+palpite <- as.integer(readline(prompt = "Tente adivinhar o número (1 a 50): "))
+tentativas <- tentativas + 1
+
+# Estrutura de repetição while
+while (palpite != numero_secreto) {
+  if (palpite > numero_secreto) {
+    print("Tente um número menor")
+  }else{
+    print("Tente um número maior")
+  }
+  palpite <- as.integer(readline(prompt = "Digite novamente: "))
+  tentativas <- tentativas + 1
+}
+
+# Mensagem de acerto
+cat("Parabéns! Você acertou em", tentativas, "tentativas.\n")
+```
