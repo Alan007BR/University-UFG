@@ -1,5 +1,5 @@
-# conversão decimal para binário
-a <- c(1,0,0,1,0,1,0,1,0,1)
+# conversão binario para decimal
+a <- c(1,0,1,0,1,1,0,1,1)
 b <- numeric()
 j <- length(a)
 
