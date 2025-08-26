@@ -26,7 +26,7 @@ decimal_to_binary_fraction <- function(x, precision = 10) {
 }
 
 
-main <- function(num, precisao = 10) {
+main <- function(num, precisao = 4) {
   inteiro <- floor(num)
   fracao <- num - inteiro
 
@@ -41,4 +41,4 @@ main <- function(num, precisao = 10) {
   }
 }
 
-print(main(0.11))
+print(main(0.2578125))
