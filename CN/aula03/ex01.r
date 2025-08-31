@@ -16,5 +16,5 @@ decimal_to_binary <- function(x) {
     return(resto)
 }
 
-result <- decimal_to_binary(2021)
+result <- decimal_to_binary(71)
 print(result)
