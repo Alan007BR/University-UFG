@@ -48,11 +48,13 @@ def encontra_intervalos(f, a, b, h=0.5, amostragem=20):
     
     return intervalos_raizes
 
-def newton_raphson_duplo_criterio(f, df, x0, eps1=1e-6, eps2=1e-6, max_iter=50):
+def newton_raphson_duplo_criterio(f, df, x0, eps1=1e-6, eps2=1e-6, max_iter=50, mode: str = "ambos"):
     """
-    Método de Newton-Raphson com dois critérios de parada:
-      - |f(x_{k+1})| < eps1
-      - |x_{k+1} - x_k| < eps2
+    Método de Newton-Raphson com critérios de parada selecionáveis:
+      - mode="func": para quando |f(x_{k+1})| < eps1
+      - mode="passo": para quando |x_{k+1} - x_k| < eps2
+      - mode="ambos": para quando (|f(x_{k+1})| < eps1) OU (|x_{k+1} - x_k| < eps2)
+
     Retorna (raiz_aprox, histórico de x, iteração de parada, critério usado)
     """
     x = x0
@@ -66,10 +68,16 @@ def newton_raphson_duplo_criterio(f, df, x0, eps1=1e-6, eps2=1e-6, max_iter=50):
         historico.append(x_new)
         crit1 = abs(f(x_new)) < eps1
         crit2 = abs(x_new - x) < eps2
-        if crit1:
-            return x_new, historico, k+1, 'funcional (|f(x)| < eps1)'
-        if crit2:
-            return x_new, historico, k+1, 'intervalar (|x_{k+1} - x_k| < eps2)'
+        if mode == "func":
+            if crit1:
+                return x_new, historico, k+1, 'funcional (|f(x)| < eps1)'
+        elif mode == "passo":
+            if crit2:
+                return x_new, historico, k+1, 'intervalar (|x_{k+1} - x_k| < eps2)'
+        else:  # mode == "ambos" (OR)
+            if crit1 or crit2:
+                criterio = 'funcional (|f(x)| < eps1)' if crit1 else 'intervalar (|x_{k+1} - x_k| < eps2)'
+                return x_new, historico, k+1, criterio
         x = x_new
     return x, historico, max_iter, 'máximo de iterações'
 
@@ -122,7 +130,10 @@ else:
 print(f"Intervalo escolhido: {origem}")
 print(f"Chute inicial para Newton: x0 = {x0}")
 
-raiz, hist, iter_stop, crit_stop = newton_raphson_duplo_criterio(f, df, x0)
+# Selecione o modo de parada: "ambos" (OR), "func" (apenas |f(x)|), ou "passo" (apenas |Δx|)
+modo_parada = "ambos"
+
+raiz, hist, iter_stop, crit_stop = newton_raphson_duplo_criterio(f, df, x0, mode=modo_parada)
 print(f"Raiz aproximada: {raiz}")
 print(f"Parou na iteração: {iter_stop} pelo critério: {crit_stop}")
 print(f"Histórico: {hist}")

@@ -19,8 +19,8 @@ def bin_int_or_frac_to_decimal(number_bin: str) -> float:
     if not all(ch in '01' for ch in int_part):
         raise ValueError('Apenas dígitos 0/1 são permitidos na parte inteira.')
     if not all(ch in '01' for ch in frac_part):
-        raise ValueError('Apenas dígitos 0/1 são permitidos na parte fracionária.')
-    print(f"Partes: inteira = '{int_part}', fracionária = '{frac_part}'")
+        raise ValueError('Apenas dígitos 0/1 são permitidos na parte fração.')
+    print(f"Partes: inteira = '{int_part}', fração = '{frac_part}'")
     print("")
     # Parte inteira: notação posicional Σ b_k * 2^k
     int_val = int(int_part, 2) if int_part else 0
@@ -33,19 +33,19 @@ def bin_int_or_frac_to_decimal(number_bin: str) -> float:
     print(f"Parte inteira: ({int_bits})_2 = " + " + ".join(termos_int))
     print(f"Valor da parte inteira: {int_val}")
     print("")
-    # Parte fracionária: (0, d1 d2 ...)_2 = Σ d_i * 2^-i
+    # Parte fração: (0, d1 d2 ...)_2 = Σ d_i * 2^-i
     frac_val = 0.0
     if frac_part:
         termos_frac = [f"{ch}*2^-{i}" for i, ch in enumerate(frac_part, start=1)]
-        print(f"Parte fracionária: (0,{frac_part})_2 = " + " + ".join(termos_frac))
+        print(f"Parte fração: (0,{frac_part})_2 = " + " + ".join(termos_frac))
         for i, ch in enumerate(frac_part, start=1):
             contrib = int(ch) * (2 ** -i)
             frac_val += contrib
             print(f"  d{i}={ch} → {ch}*2^-{i} = {contrib:.12f}")
-        print(f"Valor da parte fracionária: {frac_val:.12f}")
+        print(f"Valor da parte fração: {frac_val:.12f}")
     else:
-        print("Parte fracionária: (0,)_2 = 0")
-        print("Valor da parte fracionária: 0")
+        print("Parte fração: (0,)_2 = 0")
+        print("Valor da parte fração: 0")
     print("")
     total = int_val + frac_val
     print(f"Resultado: ({int_bits},{frac_part})_2 = {int_val} + {frac_val:.12f} = {total:.12f}")

@@ -58,4 +58,4 @@ def decimal_para_binario_total(x: float, max_frac_bits: int = 20, tol: float = 1
     return int_bits + '.' + frac_bits
 
 # Executando a função
-print(decimal_para_binario_total(273.15625))
+print(decimal_para_binario_total(273.937))

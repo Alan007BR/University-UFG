@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Definição da função
 def f(x):
-    return 5*x**3 - 8*x - 0.5
+    return 2*(x**3) - 10*(x**2) + 4*x + 12
 
 def encontra_intervalos(f, a, b, h=0.5, amostragem=20):
     """
@@ -48,27 +48,32 @@ def encontra_intervalos(f, a, b, h=0.5, amostragem=20):
     
     return intervalos_raizes
 
-def bissecao_flex(f, a, b, tol=1e-6, max_iter=100, mode="func"):
+def bissecao_flex(f, a, b, tol=10e-3, max_iter=100, mode="func"):
     """
     Bissecção com modos de parada:
       - mode="func": para quando |f(p)| < tol
       - mode="intervalo": para quando (b - a)/2 < tol
       - mode="ambos": para quando |f(p)| < tol OU (b - a)/2 < tol
-    Retorna (p, historico)
+    Retorna (p, historico, a_hist, b_hist)
     """
     if a > b:
         a, b = b, a
     fa, fb = f(a), f(b)
     if fa == 0:
-        return a, [a]
+        return a, [a], [a], [a]
     if fb == 0:
-        return b, [b]
+        return b, [b], [b], [b]
     if fa * fb > 0:
         raise ValueError("Intervalo não possui mudança de sinal (f(a)*f(b) > 0).")
 
     historico = []
+    a_hist = []
+    b_hist = []
     p = None
     for _ in range(max_iter):
+        # registra intervalo atual antes do ponto médio
+        a_hist.append(a)
+        b_hist.append(b)
         p = 0.5 * (a + b)
         fp = f(p)
         historico.append(p)
@@ -77,22 +82,22 @@ def bissecao_flex(f, a, b, tol=1e-6, max_iter=100, mode="func"):
         stop_intervalo = 0.5 * (b - a) < tol
 
         if mode == "func" and stop_func:
-            return p, historico
+            return p, historico, a_hist, b_hist
         if mode == "intervalo" and stop_intervalo:
-            return p, historico
+            return p, historico, a_hist, b_hist
         if mode == "ambos" and (stop_func or stop_intervalo):
-            return p, historico
+            return p, historico, a_hist, b_hist
 
         if fa * fp < 0:
             b, fb = p, fp
         else:
             a, fa = p, fp
-    return p, historico
+    return p, historico, a_hist, b_hist
 
 # USANDO AS FUNÇÕES ACIMA
 
 # Procurando intervalos com raízes para f(x)
-intervalos = encontra_intervalos(f, -3, 3, h=0.5)
+intervalos = encontra_intervalos(f, 4, 4.5, h=1)
 
 # pega o primeiro intervalo válido
 intervalo_valido = None
@@ -103,12 +108,23 @@ for (a, b) in intervalos:
 
 if intervalo_valido:
     a, b = intervalo_valido
-    r1, _ = bissecao_flex(f, a, b, tol=1e-6, mode='func')
-    r2, _ = bissecao_flex(f, a, b, tol=1e-6, mode='intervalo')
-    r3, _ = bissecao_flex(f, a, b, tol=1e-6, mode='ambos')
+    p1, hist1, a_hist1, b_hist1 = bissecao_flex(f, a, b, tol=10e-3, mode='func')
+    p2, hist2, a_hist2, b_hist2 = bissecao_flex(f, a, b, tol=10e-3, mode='intervalo')
+    p3, hist3, a_hist3, b_hist3 = bissecao_flex(f, a, b, tol=10e-3, mode='ambos')
     print(f"Intervalo: [{a}, {b}]")
-    print(f"(critério 1) func     -> x ≈ {r1:.8f}, f(x) ≈ {f(r1): .2e}")
-    print(f"(critério 2) intervalo-> x ≈ {r2:.8f}, f(x) ≈ {f(r2): .2e}")
-    print(f"(critério 3) ambos    -> x ≈ {r3:.8f}, f(x) ≈ {f(r3): .2e}")
+    print(f"(critério 1) func     -> x ≈ {p1:.8f}, f(x) ≈ {f(p1): .2e}")
+    print("Evolução (func):")
+    for k, (ak, bk, pk) in enumerate(zip(a_hist1, b_hist1, hist1), start=1):
+        print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
+
+    print(f"\n(critério 2) intervalo-> x ≈ {p2:.8f}, f(x) ≈ {f(p2): .2e}")
+    print("Evolução (intervalo):")
+    for k, (ak, bk, pk) in enumerate(zip(a_hist2, b_hist2, hist2), start=1):
+        print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
+
+    print(f"\n(critério 3) ambos    -> x ≈ {p3:.8f}, f(x) ≈ {f(p3): .2e}")
+    print("Evolução (ambos):")
+    for k, (ak, bk, pk) in enumerate(zip(a_hist3, b_hist3, hist3), start=1):
+        print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
 else:
     print("Nenhum intervalo válido encontrado.")

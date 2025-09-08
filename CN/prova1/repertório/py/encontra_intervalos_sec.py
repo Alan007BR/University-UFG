@@ -45,11 +45,12 @@ def encontra_intervalos(f, a, b, h=0.5, amostragem=20):
     
     return intervalos_raizes
 
-def secante_duplo_criterio(f, x0, x1, eps1=1e-6, eps2=1e-6, max_iter=50):
+def secante_duplo_criterio(f, x0, x1, eps1=1e-6, eps2=1e-6, max_iter=50, mode: str = "ambos"):
     """
-    Método da Secante com dois critérios de parada:
-      - |f(x_{k+1})| < eps1
-      - |x_{k+1} - x_k| < eps2
+    Método da Secante com critérios de parada selecionáveis:
+      - mode="func": para quando |f(x_{k+1})| < eps1
+      - mode="passo": para quando |x_{k+1} - x_k| < eps2
+      - mode="ambos": para quando (|f(x_{k+1})| < eps1) OU (|x_{k+1} - x_k| < eps2)
     Retorna (raiz_aprox, histórico de x, iteração de parada, critério usado)
     """
     historico = [x0, x1]
@@ -63,10 +64,16 @@ def secante_duplo_criterio(f, x0, x1, eps1=1e-6, eps2=1e-6, max_iter=50):
         crit1 = abs(f(x2)) < eps1
         crit2 = abs(x2 - x1) < eps2
         print(f"x{k+2} = {x2}")
-        if crit1:
-            return x2, historico, k+1, 'funcional (|f(x)| < eps1)'
-        if crit2:
-            return x2, historico, k+1, 'intervalar (|x_{k+1} - x_k| < eps2)'
+        if mode == "func":
+            if crit1:
+                return x2, historico, k+1, 'funcional (|f(x)| < eps1)'
+        elif mode == "passo":
+            if crit2:
+                return x2, historico, k+1, 'intervalar (|x_{k+1} - x_k| < eps2)'
+        else:  # mode == "ambos"
+            if crit1 or crit2:
+                criterio = 'funcional (|f(x)| < eps1)' if crit1 else 'intervalar (|x_{k+1} - x_k| < eps2)'
+                return x2, historico, k+1, criterio
         x0, x1 = x1, x2
     return x2, historico, max_iter, 'máximo de iterações'
 
@@ -93,14 +100,33 @@ if intervalo_valido is None:
 
 if intervalo_valido is not None:
     a, b = intervalo_valido
-    # Se for raiz exata, reporta diretamente; secante exige dois pontos distintos
+    # Se for raiz exata, ainda assim executa Secante para testar precisão, gerando chutes próximos
     if a == b and f(a) == 0:
-        print(f"Intervalo: [{a}, {b}] (raiz exata)")
-        print(f"Raiz exata encontrada: x = {a}")
-        print("Histórico: [x]")
-        print("Critério: raiz exata detectada no varrimento")
+        r = a
+        print(f"Intervalo: [{a}, {b}] (raiz exata detectada)")
+        # Gera dois chutes próximos de r e evita denominador zero adaptando delta
+        delta = 1e-3
+        max_tries = 6
+        tried = 0
+        while tried < max_tries:
+            x0 = r - delta
+            x1 = r + delta
+            fx0, fx1 = f(x0), f(x1)
+            if fx1 - fx0 != 0 and x0 != x1:
+                break
+            delta *= 10
+            tried += 1
+        print(f"Chutes para Secante ao redor da raiz: x0={x0:.12f}, x1={x1:.12f} (delta={delta:.3g})")
+        # Selecione o modo de parada: "ambos" (OR), "func" (apenas |f(x)|), ou "passo" (apenas |Δx|)
+        modo_parada = "ambos"
+        raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, x0, x1, mode=modo_parada)
+        print(f"Raiz aproximada (Secante): {raiz}")
+        print(f"Histórico: {hist}")
+        print(f"Parou na iteração: {iter_stop} pelo critério: {crit_stop}")
     else:
-        raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, a, b)
+        # Selecione o modo de parada: "ambos" (OR), "func" (apenas |f(x)|), ou "passo" (apenas |Δx|)
+        modo_parada = "ambos"
+        raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, a, b, mode=modo_parada)
         print(f"Intervalo: [{a}, {b}]")
         print(f"Raiz aproximada: {raiz}")
         print(f"Histórico: {hist}")
