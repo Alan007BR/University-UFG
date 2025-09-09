@@ -1,7 +1,9 @@
 import numpy as np
+import math
 
 def f(x):
-    return x**2 + x - 6
+    """f(x) = 10*e^{-x} - 1 (raiz em ln(10) ≈ 2.302585)."""
+    return 10*math.exp(-x) - 1
 def encontra_intervalos(f, a, b, h=0.5, amostragem=20):
     """
     Encontra intervalos de comprimento h que contenham raízes de f(x).
@@ -82,54 +84,62 @@ def secante_duplo_criterio(f, x0, x1, eps1=1e-6, eps2=1e-6, max_iter=50, mode: s
 
 # Procurando intervalos com raízes para f(x)
 # Exemplo: f(x) = x^2 + x - 6, chutes x0=1.5, x1=1.7 (slides professor)
-intervalos = encontra_intervalos(f, -4, 4, h=1)
+# intervalos = encontra_intervalos(f, -4, 4, h=1)
 
-# Seleciona primeiro um intervalo com raiz exata, se existir; caso contrário, o primeiro com mudança de sinal
-intervalo_valido = None
-# 1) Prioridade: raiz exata (o algoritmo marca como (r, r))
-for (a, b) in intervalos:
-    if a == b and f(a) == 0:
-        intervalo_valido = (a, b)
-        break
-# 2) Fallback: primeira mudança de sinal
-if intervalo_valido is None:
-    for (a, b) in intervalos:
-        if a != b and f(a) * f(b) < 0:
-            intervalo_valido = (a, b)
-            break
+# # Seleciona primeiro um intervalo com raiz exata, se existir; caso contrário, o primeiro com mudança de sinal
+# intervalo_valido = None
+# # 1) Prioridade: raiz exata (o algoritmo marca como (r, r))
+# for (a, b) in intervalos:
+#     if a == b and f(a) == 0:
+#         intervalo_valido = (a, b)
+#         break
+# # 2) Fallback: primeira mudança de sinal
+# if intervalo_valido is None:
+#     for (a, b) in intervalos:
+#         if a != b and f(a) * f(b) < 0:
+#             intervalo_valido = (a, b)
+#             break
 
-if intervalo_valido is not None:
-    a, b = intervalo_valido
-    # Se for raiz exata, ainda assim executa Secante para testar precisão, gerando chutes próximos
-    if a == b and f(a) == 0:
-        r = a
-        print(f"Intervalo: [{a}, {b}] (raiz exata detectada)")
-        # Gera dois chutes próximos de r e evita denominador zero adaptando delta
-        delta = 1e-3
-        max_tries = 6
-        tried = 0
-        while tried < max_tries:
-            x0 = r - delta
-            x1 = r + delta
-            fx0, fx1 = f(x0), f(x1)
-            if fx1 - fx0 != 0 and x0 != x1:
-                break
-            delta *= 10
-            tried += 1
-        print(f"Chutes para Secante ao redor da raiz: x0={x0:.12f}, x1={x1:.12f} (delta={delta:.3g})")
-        # Selecione o modo de parada: "ambos" (OR), "func" (apenas |f(x)|), ou "passo" (apenas |Δx|)
-        modo_parada = "ambos"
-        raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, x0, x1, mode=modo_parada)
-        print(f"Raiz aproximada (Secante): {raiz}")
-        print(f"Histórico: {hist}")
-        print(f"Parou na iteração: {iter_stop} pelo critério: {crit_stop}")
-    else:
-        # Selecione o modo de parada: "ambos" (OR), "func" (apenas |f(x)|), ou "passo" (apenas |Δx|)
-        modo_parada = "ambos"
-        raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, a, b, mode=modo_parada)
-        print(f"Intervalo: [{a}, {b}]")
-        print(f"Raiz aproximada: {raiz}")
-        print(f"Histórico: {hist}")
-        print(f"Parou na iteração: {iter_stop} pelo critério: {crit_stop}")
-else:
-    print("Nenhum intervalo válido encontrado.")
+# if intervalo_valido is not None:
+#     a, b = intervalo_valido
+#     # Se for raiz exata, ainda assim executa Secante para testar precisão, gerando chutes próximos
+#     if a == b and f(a) == 0:
+#         r = a
+#         print(f"Intervalo: [{a}, {b}] (raiz exata detectada)")
+#         # Gera dois chutes próximos de r e evita denominador zero adaptando delta
+#         delta = 1e-3
+#         max_tries = 6
+#         tried = 0
+#         while tried < max_tries:
+#             x0 = r - delta
+#             x1 = r + delta
+#             fx0, fx1 = f(x0), f(x1)
+#             if fx1 - fx0 != 0 and x0 != x1:
+#                 break
+#             delta *= 10
+#             tried += 1
+#         print(f"Chutes para Secante ao redor da raiz: x0={x0:.12f}, x1={x1:.12f} (delta={delta:.3g})")
+#         # Selecione o modo de parada: "ambos" (OR), "func" (apenas |f(x)|), ou "passo" (apenas |Δx|)
+#         modo_parada = "ambos"
+#         raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, x0, x1, mode=modo_parada)
+#         print(f"Raiz aproximada (Secante): {raiz}")
+#         print(f"Histórico: {hist}")
+#         print(f"Parou na iteração: {iter_stop} pelo critério: {crit_stop}")
+#     else:
+#         # Selecione o modo de parada: "ambos" (OR), "func" (apenas |f(x)|), ou "passo" (apenas |Δx|)
+#         modo_parada = "ambos"
+#         raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, a, b, mode=modo_parada)
+#         print(f"Intervalo: [{a}, {b}]")
+#         print(f"Raiz aproximada: {raiz}")
+#         print(f"Histórico: {hist}")
+#         print(f"Parou na iteração: {iter_stop} pelo critério: {crit_stop}")
+# else:
+#     print("Nenhum intervalo válido encontrado.")
+
+modo_parada = "passo"  # apenas |x_{k+1}-x_k| < eps2
+eps_passo = 1e-3
+raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, 0.0, 4.0, mode=modo_parada, eps1=1e-12, eps2=eps_passo)
+print("Evolução das aproximações:")
+print(" ".join(f"{x:.6f}" for x in hist))
+print(f"Raiz aproximada: {raiz:.6f}")
+print(f"Iterações: {iter_stop} (critério: {crit_stop})")

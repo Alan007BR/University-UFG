@@ -97,34 +97,53 @@ def bissecao_flex(f, a, b, tol=10e-3, max_iter=100, mode="func"):
 # USANDO AS FUNÇÕES ACIMA
 
 # Procurando intervalos com raízes para f(x)
-intervalos = encontra_intervalos(f, 4, 4.5, h=1)
+# intervalos = encontra_intervalos(f, 4, 4.5, h=1)
 
-# pega o primeiro intervalo válido
-intervalo_valido = None
-for (a, b) in intervalos:
-    if a != b and f(a) * f(b) < 0:
-        intervalo_valido = (a, b)
-        break
+# # pega o primeiro intervalo válido
+# intervalo_valido = None
+# for (a, b) in intervalos:
+#     if a != b and f(a) * f(b) < 0:
+#         intervalo_valido = (a, b)
+#         break
 
-if intervalo_valido:
-    a, b = intervalo_valido
-    p1, hist1, a_hist1, b_hist1 = bissecao_flex(f, a, b, tol=10e-3, mode='func')
-    p2, hist2, a_hist2, b_hist2 = bissecao_flex(f, a, b, tol=10e-3, mode='intervalo')
-    p3, hist3, a_hist3, b_hist3 = bissecao_flex(f, a, b, tol=10e-3, mode='ambos')
-    print(f"Intervalo: [{a}, {b}]")
-    print(f"(critério 1) func     -> x ≈ {p1:.8f}, f(x) ≈ {f(p1): .2e}")
-    print("Evolução (func):")
-    for k, (ak, bk, pk) in enumerate(zip(a_hist1, b_hist1, hist1), start=1):
-        print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
+# if intervalo_valido:
+#     a, b = intervalo_valido
+#     p1, hist1, a_hist1, b_hist1 = bissecao_flex(f, a, b, tol=10e-3, mode='func')
+#     p2, hist2, a_hist2, b_hist2 = bissecao_flex(f, a, b, tol=10e-3, mode='intervalo')
+#     p3, hist3, a_hist3, b_hist3 = bissecao_flex(f, a, b, tol=10e-3, mode='ambos')
+#     print(f"Intervalo: [{a}, {b}]")
+#     print(f"(critério 1) func     -> x ≈ {p1:.8f}, f(x) ≈ {f(p1): .2e}")
+#     print("Evolução (func):")
+#     for k, (ak, bk, pk) in enumerate(zip(a_hist1, b_hist1, hist1), start=1):
+#         print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
 
-    print(f"\n(critério 2) intervalo-> x ≈ {p2:.8f}, f(x) ≈ {f(p2): .2e}")
-    print("Evolução (intervalo):")
-    for k, (ak, bk, pk) in enumerate(zip(a_hist2, b_hist2, hist2), start=1):
-        print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
+#     print(f"\n(critério 2) intervalo-> x ≈ {p2:.8f}, f(x) ≈ {f(p2): .2e}")
+#     print("Evolução (intervalo):")
+#     for k, (ak, bk, pk) in enumerate(zip(a_hist2, b_hist2, hist2), start=1):
+#         print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
 
-    print(f"\n(critério 3) ambos    -> x ≈ {p3:.8f}, f(x) ≈ {f(p3): .2e}")
-    print("Evolução (ambos):")
-    for k, (ak, bk, pk) in enumerate(zip(a_hist3, b_hist3, hist3), start=1):
-        print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
-else:
-    print("Nenhum intervalo válido encontrado.")
+#     print(f"\n(critério 3) ambos    -> x ≈ {p3:.8f}, f(x) ≈ {f(p3): .2e}")
+#     print("Evolução (ambos):")
+#     for k, (ak, bk, pk) in enumerate(zip(a_hist3, b_hist3, hist3), start=1):
+#         print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
+# else:
+#     print("Nenhum intervalo válido encontrado.")
+
+p1, hist1, a_hist1, b_hist1 = bissecao_flex(f, 4, 4.5, tol=1e-3, mode='func')
+# p2, hist2, a_hist2, b_hist2 = bissecao_flex(f, a, b, tol=1e-3, mode='intervalo')
+# p3, hist3, a_hist3, b_hist3 = bissecao_flex(f, a, b, tol=1e-3, mode='ambos')
+print(f"Intervalo: [{4}, {4.5}]")
+print(f"(critério 1) func     -> uma aproximação para raíz é: x ≈ {p1:.8f}, f(x) ≈ {f(p1): .2e}")
+print("Evolução (func):")
+for k, (ak, bk, pk) in enumerate(zip(a_hist1, b_hist1, hist1), start=1):
+    print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
+
+# print(f"\n(critério 2) intervalo-> x ≈ {p2:.8f}, f(x) ≈ {f(p2): .2e}")
+# print("Evolução (intervalo):")
+# for k, (ak, bk, pk) in enumerate(zip(a_hist2, b_hist2, hist2), start=1):
+#     print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")
+
+# print(f"\n(critério 3) ambos    -> x ≈ {p3:.8f}, f(x) ≈ {f(p3): .2e}")
+# print("Evolução (ambos):")
+# for k, (ak, bk, pk) in enumerate(zip(a_hist3, b_hist3, hist3), start=1):
+#     print(f"  k={k:2d}: a={ak:.8f}, b={bk:.8f}, p={pk:.8f}, f(p)={f(pk): .2e}")

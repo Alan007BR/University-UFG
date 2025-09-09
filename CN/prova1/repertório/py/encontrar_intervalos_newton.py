@@ -1,10 +1,10 @@
 import numpy as np
 
 def f(x):
-    return x**2 + x - 6
+    return x**3 - 6*(x**2) + 4*x + 12
 
 def df(x):
-    return 2*x + 1
+    return (3*(x**2)) - (12*x) + 4
 def encontra_intervalos(f, a, b, h=0.5, amostragem=20):
     """
     Encontra intervalos de comprimento h que contenham raízes de f(x).
@@ -83,57 +83,57 @@ def newton_raphson_duplo_criterio(f, df, x0, eps1=1e-6, eps2=1e-6, max_iter=50, 
 
 # USANDO A FUNÇÃO f E df DEFINIDAS ACIMA
 # Integra o encontrador de intervalos para definir automaticamente o chute x0
-intervalos = encontra_intervalos(f, -4, 4, h=1)
+# intervalos = encontra_intervalos(f, -4, 4, h=1)
 
-# Seleciona: (1) raiz exata, se houver; (2) primeiro intervalo com mudança de sinal
-intervalo_sel = None
-for (a, b) in intervalos:
-    if a == b and f(a) == 0:
-        intervalo_sel = (a, b)
-        break
-if intervalo_sel is None:
-    for (a, b) in intervalos:
-        if a != b and f(a) * f(b) < 0:
-            intervalo_sel = (a, b)
-            break
+# # Seleciona: (1) raiz exata, se houver; (2) primeiro intervalo com mudança de sinal
+# intervalo_sel = None
+# for (a, b) in intervalos:
+#     if a == b and f(a) == 0:
+#         intervalo_sel = (a, b)
+#         break
+# if intervalo_sel is None:
+#     for (a, b) in intervalos:
+#         if a != b and f(a) * f(b) < 0:
+#             intervalo_sel = (a, b)
+#             break
 
-if intervalo_sel is None:
-    raise RuntimeError("Nenhum intervalo adequado encontrado para iniciar Newton.")
+# if intervalo_sel is None:
+#     raise RuntimeError("Nenhum intervalo adequado encontrado para iniciar Newton.")
 
-a, b = intervalo_sel
+# a, b = intervalo_sel
 
-# Escolhe x0
-if a == b and f(a) == 0:
-    r = a
-    # Gera x0 próximo de r para testar precisão; evita dfx≈0
-    delta = 1e-3
-    max_tries = 6
-    tried = 0
-    while tried < max_tries:
-        x0 = r + delta
-        if abs(df(x0)) > 1e-14:
-            break
-        delta *= 10
-        tried += 1
-    origem = f"raiz exata em [{a}, {b}]"
-else:
-    # Pega ponto médio do intervalo com mudança de sinal
-    x0 = 0.5 * (a + b)
-    # Se derivada muito pequena, desloca levemente para dentro do intervalo
-    if abs(df(x0)) <= 1e-14:
-        eps = 1e-3
-        cand1 = min(max(a + eps, a), b)
-        cand2 = min(max(b - eps, a), b)
-        x0 = cand1 if abs(df(cand1)) > abs(df(cand2)) else cand2
-    origem = f"mudança de sinal em [{a}, {b}] (x0 = ponto médio)"
+# # Escolhe x0
+# if a == b and f(a) == 0:
+#     r = a
+#     # Gera x0 próximo de r para testar precisão; evita dfx≈0
+#     delta = 1e-3
+#     max_tries = 6
+#     tried = 0
+#     while tried < max_tries:
+#         x0 = r + delta
+#         if abs(df(x0)) > 1e-14:
+#             break
+#         delta *= 10
+#         tried += 1
+#     origem = f"raiz exata em [{a}, {b}]"
+# else:
+#     # Pega ponto médio do intervalo com mudança de sinal
+#     x0 = 0.5 * (a + b)
+#     # Se derivada muito pequena, desloca levemente para dentro do intervalo
+#     if abs(df(x0)) <= 1e-14:
+#         eps = 1e-3
+#         cand1 = min(max(a + eps, a), b)
+#         cand2 = min(max(b - eps, a), b)
+#         x0 = cand1 if abs(df(cand1)) > abs(df(cand2)) else cand2
+#     origem = f"mudança de sinal em [{a}, {b}] (x0 = ponto médio)"
 
-print(f"Intervalo escolhido: {origem}")
-print(f"Chute inicial para Newton: x0 = {x0}")
+# print(f"Intervalo escolhido: {origem}")
+# print(f"Chute inicial para Newton: x0 = {x0}")
 
 # Selecione o modo de parada: "ambos" (OR), "func" (apenas |f(x)|), ou "passo" (apenas |Δx|)
-modo_parada = "ambos"
+modo_parada = "func"  # queremos parar por |f(x)| < 1e-6
 
-raiz, hist, iter_stop, crit_stop = newton_raphson_duplo_criterio(f, df, x0, mode=modo_parada)
-print(f"Raiz aproximada: {raiz}")
+raiz, hist, iter_stop, crit_stop = newton_raphson_duplo_criterio(f, df, -2, eps1=1e-6, eps2=1e-12, mode=modo_parada)
+print("Evolução das aproximações = ", " ".join(f"{x:.6f}" for x in hist))
+print(f"Raiz aproximada: {raiz:.6f}")
 print(f"Parou na iteração: {iter_stop} pelo critério: {crit_stop}")
-print(f"Histórico: {hist}")
