@@ -66,5 +66,3 @@ def bin_int_or_frac_to_decimal(number_bin: str) -> float:
 
 # Executando a função
 print(bin_int_or_frac_to_decimal('10101010,10101'))
-# print(bin_int_or_frac_to_decimal('0,01011'))
-# print(bin_int_or_frac_to_decimal('101.101'))

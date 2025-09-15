@@ -3,7 +3,9 @@ import math
 
 def f(x):
     """f(x) = 10*e^{-x} - 1 (raiz em ln(10) ≈ 2.302585)."""
-    return 10*math.exp(-x) - 1
+    # return 10*math.exp(-x) - 1
+    return math.exp(x)/2 - 5
+
 def encontra_intervalos(f, a, b, h=0.5, amostragem=20):
     """
     Encontra intervalos de comprimento h que contenham raízes de f(x).
@@ -136,9 +138,9 @@ def secante_duplo_criterio(f, x0, x1, eps1=1e-6, eps2=1e-6, max_iter=50, mode: s
 # else:
 #     print("Nenhum intervalo válido encontrado.")
 
-modo_parada = "passo"  # apenas |x_{k+1}-x_k| < eps2
-eps_passo = 1e-3
-raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, 0.0, 4.0, mode=modo_parada, eps1=1e-12, eps2=eps_passo)
+modo_parada = "func"  # usando o primeiro critério
+eps_passo = 0.00001
+raiz, hist, iter_stop, crit_stop = secante_duplo_criterio(f, 6.0, 4.0, mode=modo_parada, eps1=eps_passo, eps2=eps_passo)
 print("Evolução das aproximações:")
 print(" ".join(f"{x:.6f}" for x in hist))
 print(f"Raiz aproximada: {raiz:.6f}")
