@@ -1,18 +1,7 @@
 #include <stdio.h>
 
 int leading_zeros(unsigned short n) {
-
-    int count = 0;
-    // unsigned short 4 bytes = 32 bits
-
-    for (int i = 15; i >= 0; i--) {
-        if ((n & (1 << i)) == 0) {
-            count++;
-        } else {
-            break;
-        }
-    }
-    return count;
+    
 }
 
 int main() {

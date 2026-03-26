@@ -2,31 +2,23 @@
 
 
 
-// return 0 se o número de bits '1' em x for par, ou 1 se for ímpar
-int odd_ones(unsigned int x) { // desloca o bit em vez de uma mascara
-  int count = 0;
+int odd_ones(unsigned int x) {
 
-  for (int i = 0; i < 32; i++) {
-    if (x & 0x01) {
-        count++;
-    }
-    x = x >> 1;
+// 1 se for par
+// 0 se for impar
+int count = 0;
+
+for (int i = 0; i < 32; i++) {
+  int bit = x & 1; // 00000001
+  if(bit == 1) {
+    count++;
   }
-  return (count & 1); 
+  x = x >> 1;
 }
 
-int odd_ones2(unsigned int x) { // desloca a mascara em vez do bit
-  int count = 0;
-  unsigned int mask = 1;
-
-  for (int i = 0; i < 32; i++) {
-    if (x & mask) {
-        count++;
-    }
-    mask = mask << 1;
-  }
-  return (count & 1);
+return count & 1; //numeros impar em binario sempre termina em 1
 }
+
 
 
 int main() {
