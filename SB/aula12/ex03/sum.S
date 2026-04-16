@@ -60,7 +60,7 @@ beginwhile:
     #sum = sum + *ptr
     # movq (%r8), %rax
     # addq %rax, sum
-    # ou ?
+    # ou 
     movq sum, %r10 #move sum pra um registrador
 
     movq (%r8), %r11 #move o valor apontado por ptr para r11
