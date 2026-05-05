@@ -1,11 +1,12 @@
 .data
+
     .globl s
     .align 4
 s:  .long 0
 
     .globl nums
     .align 4
-nums: .long 65, -105, 111, 34
+nums:   .long 65, -105, 111, 34
 
 .text
 
@@ -17,34 +18,30 @@ sum:
     pushq %rbp
 
     movq  %rsp, %rbp
-    #i = ecx
-    movl $0, %ecx
 
-    # Seu código aqui...
+    #r8d -> i
+    movl $0, %r8d
 
-    #while
-    loop:
-        #_if (i < 4) -> afterloop
-        cmpl $4, %ecx
-        jge afterloop
+    while:
+    #(i < 4) -> (i>=4)
+    cmpl $4, %r8d
+    jge afterwhile
 
+    #corpo
 
-        #nums[i] = &nums + (i * sizeOf)
-        movq $nums, %r8   #r8 = &nums
-        movslq %ecx, %r9  #r9 = (long)i
-        imulq $4, %r9     #r9 = i * tam
-        addq %rdx, %r9    #r9 = &nums[i]
-        movl %r9, %eax    #eax = nums[i]
+    #nums[i] = &nums + (i*sizeof)
+    movq $nums, %r9 # r9 = &nums
+    movslq %r8d, %r10 #r10 = (long)i
+    imulq $4, %r10      #i * sizeof(long)
+    addq %r9, %r10     #&vet + i*sizeof
 
-        addl %eax, s      #s = s + eax
-        
+    movl (%r10), %eax #eax = r10 = nums[i]
 
-        #i++
-        addl $1, %eax
+    addl %eax, s
 
-        jmp loop
-    afterloop:
-        movl %eax, i
+    #i++
+    incl %r8d
+    afterwhile:
 
     leave
 
