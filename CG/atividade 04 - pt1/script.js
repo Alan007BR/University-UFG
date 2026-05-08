@@ -140,14 +140,14 @@ window.addEventListener('DOMContentLoaded', () => {
   const objeto = {
     pontos: [
       // cubo centrado na origem (-1 a 1)
-      [-1, -1, -1],  // 0
-      [1, -1, -1],  // 1
-      [1, 1, -1],  // 2
-      [-1, 1, -1],  // 3
-      [-1, -1, 1],  // 4
-      [1, -1, 1],  // 5
-      [1, 1, 1],  // 6
-      [-1, 1, 1]   // 7
+      [-1, -1, -1],    // 0
+      [1, -1, -1],     // 1
+      [1, 1, -1],      // 2
+      [-1, 1, -1],     // 3
+      [-1, -1, 1],     // 4
+      [1, -1, 1],      // 5
+      [1, 1, 1],       // 6
+      [-1, 1, 1]       // 7
     ],
     linhas: [
       // face da frente (z = -1)
@@ -161,16 +161,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // projeção cavaleira
   // x_tela = x + z * cos(alfa) * fator
-  // y_tela = y + z * sin(alfa) * fator
+  // y_tela = y - z * sin(alfa) * fator
   // alfa = 45 graus, fator = 0.5
   function projecaoCavaleira(x, y, z) {
     const alfa = 45 * Math.PI / 180;
     const fator = 0.5;
 
-    const xTela = x + z * Math.cos(alfa) * fator;
-    const yTela = y + z * Math.sin(alfa) * fator;
+    const xTela = x - z * Math.cos(alfa) * fator;
+    const yTela = y - z * Math.sin(alfa) * fator;
 
-    // deslocar pro centro da tela e inverter o Y
     return {
       x: Math.round(xTela + screen.width / 2),
       y: Math.round(-yTela + screen.height / 2)
@@ -184,8 +183,8 @@ window.addEventListener('DOMContentLoaded', () => {
     // aplicar escala (zoom) e uma rotação fixa pra visualizar em 3D
     const zoom = 80;
     const mEscala = matrizEscala(zoom, zoom, zoom);
-    const mRotX = matrizRotacaoX(25);
-    const mRotY = matrizRotacaoY(35);
+    const mRotX = matrizRotacaoX(0);
+    const mRotY = matrizRotacaoY(0);
 
     // concatenar: Escala × RotX × RotY
     let mComposta = multiplicarMatrizes(mEscala, mRotX);
