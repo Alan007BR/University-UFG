@@ -30,7 +30,7 @@
             "name": "(gdb) Iniciar",
             "type": "cppdbg",
             "request": "launch",
-            "program": "insira o nome do programa, por exemplo ${workspaceFolder}/a.out",
+            "program": "/home/alanubuntu/University-UFG/SB/instruções de ponto flutuante/lab03/ex01/main.c",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
