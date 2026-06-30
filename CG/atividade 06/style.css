@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1a1a;
+  font-family: 'Poppins', sans-serif;
+  color: #f0f0f0;
+}
+
+.app {
+  background-color: #262626;
+  padding: 25px 35px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+header h1 {
+  margin: 0 0 5px 0;
+  font-size: 1.5rem;
+  color: #bbb;
+  text-align: center;
+}
+
+.screen {
+  border: 3px solid #333;
+  border-radius: 6px;
+  background: #000;
+}
+
+.status {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #bbb;
+  background: #1a1a1a;
+  padding: 8px 15px;
+  border-radius: 6px;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.file-control {
+  margin-top: 5px;
+  color: #ccc;
+}
+
+input[type="file"] {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 6px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  background: #bbb;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.status {
+  font-size: 1.1rem;
+  font-weight: bold;
+}

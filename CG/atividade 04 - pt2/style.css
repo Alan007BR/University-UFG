@@ -1,0 +1,46 @@
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dbe2f0;
+  font-family: system-ui;
+  color: #222;
+}
+
+.app {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screen {
+  border: 1px solid #000;
+  background: #fff;
+  width: 500px;
+  height: 500px;
+  image-rendering: pixelated;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.actions button {
+  padding: 10px 15px;
+  cursor: pointer;
+  border: 1px solid #888;
+  background: #fff;
+  font-weight: bold;
+}
+
+.actions button:hover {
+  background: #eee;
+}
+
+.status {
+  font-size: 1.1rem;
+  font-weight: bold;
+}

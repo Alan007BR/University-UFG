@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.149.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="webgl.js" defer></script>
+  <script type="module" src="three.js" defer></script>
+  <script type="module" src="script.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atividade 03 - Complementar</title>
+</head>
+
+<body>
+  <main class="app">
+    <header>
+      <h1>Atividade 03 Complementar - Benchmark de Polígonos</h1>
+    </header>
+
+    <div class="actions">
+      <button id="btnManual">Testar Manual (Canvas 2D)</button>
+      <button id="btnWebGL">Testar WebGL</button>
+      <button id="btnThree">Testar Three.js</button>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="canvas2d" class="screen" width="500" height="500" style="display: block;"></canvas>
+      <canvas id="canvasWebGL" class="screen" width="500" height="500" style="display: none;"></canvas>
+      <div id="containerThree" class="screen" style="display: none; width: 500px; height: 500px; background: white;">
+      </div>
+    </div>
+
+    <div>
+      <p id="status" class="status">Escolha um teste acima para calcular 1000 repetições.</p>
+    </div>
+  </main>
+</body>
+
+</html>
